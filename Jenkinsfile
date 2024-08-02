@@ -23,5 +23,10 @@ pipeline {
                 sh 'php artisan migrate'
             }
         }
+        stage("Docker build") {
+            steps {
+                sh "docker build -t danielgara/laravel8cd ."
+            }
+        }
     }
 }
