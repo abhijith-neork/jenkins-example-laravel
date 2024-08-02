@@ -4,10 +4,10 @@ pipeline {
     stages {
         stage("Build") {
              environment {
-                DB_HOST = credentials("laravel-host")
-                DB_DATABASE = credentials("laravel-database")
-                DB_USERNAME = credentials("laravel-user")
-                DB_PASSWORD = credentials("laravel-password")
+                DB_HOST = 34.224.74.83
+                DB_DATABASE = laravel
+                DB_USERNAME = app
+                DB_PASSWORD = admin123
             }
            steps {
                 sh 'cp .env.example .env'
