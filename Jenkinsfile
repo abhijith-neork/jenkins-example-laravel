@@ -25,7 +25,7 @@ pipeline {
         }
         stage("Docker build") {
             steps {
-                sh "docker build -t danielgara/laravel8cd ."
+                sh "docker build -t abhijith99954/laravel8cd ."
             }
         }
         stage("Docker push") {
