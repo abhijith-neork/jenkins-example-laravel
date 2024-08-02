@@ -10,11 +10,17 @@ pipeline {
                 DB_PASSWORD = 'admin123'
             }
             steps {
+                sh 'php --version'
+                sh 'composer install'
+                sh 'composer --version'
                 sh 'cp .env.example .env'
-                script {
-                    echo "Connecting to database at ${DB_HOST} with user ${DB_USERNAME}"
-                    // Add your build steps here
-                }
+                sh 'echo DB_HOST=${DB_HOST} >> .env'
+                sh 'echo DB_USERNAME=${DB_USERNAME} >> .env'
+                sh 'echo DB_DATABASE=${DB_DATABASE} >> .env'
+                sh 'echo DB_PASSWORD=${DB_PASSWORD} >> .env'
+                sh 'php artisan key:generate'
+                sh 'cp .env .env.testing'
+                sh 'php artisan migrate'
             }
         }
     }
