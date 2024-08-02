@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage("Build") {
              environment {
-                DB_HOST = 34.224.74.83
+                DB_HOST = localhost
                 DB_DATABASE = laravel
                 DB_USERNAME = app
                 DB_PASSWORD = admin123
