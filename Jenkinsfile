@@ -35,12 +35,12 @@ pipeline {
             }
             steps {
                 sh "docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}"
-                sh "docker push danielgara/laravel8cd"
+                sh "docker push abhijith99954/laravel8cd"
             }
         }
         stage("Deploy to staging") {
             steps {
-                sh "docker run -d --rm -p 80:80 --name laravel8cd danielgara/laravel8cd"
+                sh "docker run -d --rm -p 80:80 --name laravel8cd abhijith99954/laravel8cd"
             }
         }
         
