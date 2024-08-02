@@ -9,6 +9,12 @@ pipeline {
                 DB_USERNAME = credentials("app")
                 DB_PASSWORD = credentials("admin123")
             }
+             steps {
+                script {
+                    echo "Connecting to database at ${DB_HOST} with user ${DB_USERNAME}"
+                    // Add your build steps here
+                }
+            }
             steps {
                 sh 'php --version'
                 sh 'composer install'
