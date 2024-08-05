@@ -38,10 +38,10 @@ pipeline {
                 DOCKER_USERNAME = 'abhijith99954'
                 DOCKER_PASSWORD = 'Abhijith@1'
             }
-            steps {
+            //steps {
                 sh "docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}"
                 sh "docker push abhijith99954/laravel8cd"
-            }
+            }//
         }
          stage("Deploy to staging") {
             steps {
