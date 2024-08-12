@@ -31,7 +31,7 @@ jobs:
 
     - name: Deploy to AWS EC2
       run: |
-        ssh -l ${{ secrets.SSH_PRIVATE_KEY }} ubuntu@${{ secrets.AWS_INSTANCE_IP }} "
+        ssh -b ${{ secrets.SSH_PRIVATE_KEY }} ubuntu@${{ secrets.AWS_INSTANCE_IP }} "
           cd /var/www/html &&
           git pull &&
           composer install --no-dev &&
