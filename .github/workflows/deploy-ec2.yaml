@@ -40,7 +40,7 @@ jobs:
         echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
 
     - name: Run Laravel Migrations
-      run: php artisan migrate --force    
+      run: php artisan migrate   
 
 
     - name: Deploy to Server
