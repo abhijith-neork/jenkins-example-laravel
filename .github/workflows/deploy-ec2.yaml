@@ -40,14 +40,14 @@ jobs:
         echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
 
     - name: Run Laravel Migrations
-      run: php artisan migrate   
+      run: php artisan migrate --force    
 
 
     - name: Deploy to Server
-      uses: easingthemes/ssh-deploy@v2
+      uses: easingthemes/ssh-deploy@main
       with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-        remote-user: ${{ secrets.REMOTE_USER }}
-        server-ip: ${{ secrets.SERVER_IP }}
-        remote-path: ${{ secrets.REMOTE_PATH }}
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        REMOTE_USER: ${{ secrets.REMOTE_USER }}
+        SERVER_IP: ${{ secrets.SERVER_IP }}
+        REMOTE_PATH: ${{ secrets.REMOTE_PATH }}
         local-path: .
