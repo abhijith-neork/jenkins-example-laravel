@@ -2,9 +2,9 @@ name: Deploy Application
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   laravel-tests:
@@ -19,7 +19,7 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: 8.1
-        extensions: mbstring, ctype, fileinfo, openssl, PDO, bcmath, json, tokenizer, xml
+        extensions: mbstring, ctype, fileinfo, openssl, PDO, bcmath, json, tokenizer, XML, mysql
 
     - name: Install Composer dependencies
       run: composer install --no-dev --no-interaction --prefer-dist
@@ -40,16 +40,26 @@ jobs:
         echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
 
     - name: Run Laravel Migrations
-      run: php artisan migrate    
+      run: php artisan migrate --force    
 
+    - name: Deploy to Server 1
+      uses: easingthemes/ssh-deploy@main
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+        REMOTE_HOST: ${{ secrets.HOST_DNS }}
+        REMOTE_USER: ${{ secrets.USERNAME }}
+        TARGET: ${{ secrets.TARGET_DIR }}
 
-    - uses: actions/checkout@v4
-    - name: copy file via ssh password
-      uses: appleboy/scp-action@v0.1.7
+    - name: Executing remote SSH commands
+      uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.HOST }}
+        host: ${{ secrets.HOST_DNS }}
         username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT }}
-        source: "."
-        target: /var/www/html
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          sudo apt-get -y update
+          sudo apt-get install -y apache2
+          sudo systemctl start apache2
+          sudo systemctl enable apache2
+          cd /home
+          sudo mv * /var/www/html
